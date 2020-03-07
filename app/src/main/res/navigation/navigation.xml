@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/allAlbumsFragment">
+
+    <fragment
+        android:id="@+id/allAlbumsFragment"
+        android:name="com.example.itunesmusic.ui.fragments.AllAlbumsFragment"
+        android:label="fragment_all_albums"
+        tools:layout="@layout/fragment_all_albums" >
+        <action
+            android:id="@+id/action_allAlbumsFragment_to_oneAlbumFragment"
+            app:destination="@id/oneAlbumFragment" />
+
+        <argument
+            android:name="album"
+            app:argType="AlbumModel"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/oneAlbumFragment"
+        android:name="com.example.itunesmusic.ui.fragments.OneAlbumFragment"
+        android:label="fragment_one_album"
+        tools:layout="@layout/fragment_one_album" />
+</navigation>
