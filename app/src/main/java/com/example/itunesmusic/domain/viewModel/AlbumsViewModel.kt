@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.itunesmusic.data.local.database.AlbumsDatabase
+import com.example.itunesmusic.data.local.database.AlbumsPlayListDatabase
 import com.example.itunesmusic.data.repository.AlbumsRepository
 import com.example.itunesmusic.domain.models.AlbumModel
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +24,8 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = AlbumsDatabase.getDatabase(application)
-    private val repository = AlbumsRepository(database)
+    private val songsDatabase = AlbumsPlayListDatabase.getDatabase(application)
+    private val repository = AlbumsRepository(database,songsDatabase)
 
     init {
         refreshAlbums()
@@ -48,6 +50,12 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     override fun onCleared() {
         viewModelJob.cancel()
         super.onCleared()
+    }
+
+    fun deleteAllSongs(){
+        coroutineScope.launch {
+            repository.deleteAllSongs()
+        }
     }
 
     fun deleteAllAlbums() {

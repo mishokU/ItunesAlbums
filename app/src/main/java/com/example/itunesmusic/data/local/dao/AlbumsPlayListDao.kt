@@ -19,4 +19,7 @@ interface AlbumsPlayListDao  {
     @Query("Delete from tracks_table")
     fun deleteAll()
 
+    @Query("Delete from tracks_table where collectionId = :id")
+    fun deleteAllSongs(id : Int)
+
 }

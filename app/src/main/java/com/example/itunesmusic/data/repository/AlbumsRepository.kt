@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations
 import com.example.itunesmusic.data.local.converters.asLocalModel
 import com.example.itunesmusic.data.local.converters.asUIModel
 import com.example.itunesmusic.data.local.database.AlbumsDatabase
+import com.example.itunesmusic.data.local.database.AlbumsPlayListDatabase
 import com.example.itunesmusic.data.remote.api.ItunesApi
 import com.example.itunesmusic.data.remote.constants.MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
 import com.example.itunesmusic.data.remote.constants.RequestValues
@@ -16,7 +17,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AlbumsRepository(private val database : AlbumsDatabase) {
+class AlbumsRepository(
+    private val database : AlbumsDatabase,
+    private val songsDatabase: AlbumsPlayListDatabase) {
 
     private val _networkStatus = MutableLiveData<NetworkStatus>()
     val networkStatus : LiveData<NetworkStatus>
@@ -61,7 +64,11 @@ class AlbumsRepository(private val database : AlbumsDatabase) {
         }
     }
 
-
+    suspend fun deleteAllSongs(){
+        withContext(Dispatchers.IO){
+            songsDatabase.albumPlayListDao().deleteAll()
+        }
+    }
 
     suspend fun deleteAllAlbums() {
         withContext(Dispatchers.IO){

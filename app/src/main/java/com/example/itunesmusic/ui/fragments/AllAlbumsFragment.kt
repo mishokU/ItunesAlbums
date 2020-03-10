@@ -9,10 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.itunesmusic.R
 import com.example.itunesmusic.databinding.FragmentAllAlbumsBinding
-import com.example.itunesmusic.domain.converters.DELETE_ALBUMS
-import com.example.itunesmusic.domain.converters.SORT
-import com.example.itunesmusic.domain.converters.bindEmptyList
-import com.example.itunesmusic.domain.converters.bindProgressBar
+import com.example.itunesmusic.domain.converters.*
 import com.example.itunesmusic.domain.models.AlbumModel
 import com.example.itunesmusic.domain.viewModel.AlbumsViewModel
 import com.example.itunesmusic.domain.viewModelFactories.AlbumsViewModelFactory
@@ -84,6 +81,11 @@ class AllAlbumsFragment : Fragment() {
             R.id.delete_all_albums -> {
                 viewModel.deleteAllAlbums()
                 showSnackBar(DELETE_ALBUMS)
+                true
+            }
+            R.id.delete_all_songs ->{
+                viewModel.deleteAllSongs()
+                showSnackBar(DELETE_SONGS)
                 true
             }
             R.id.sort_alphabetically -> {

@@ -17,6 +17,7 @@ enum class NetworkStatus { LOADING, DONE, ERROR}
 
 const val DELETE_ALBUMS = "Delete all albums from db"
 const val SORT = "Albums sorted by album name"
+const val DELETE_SONGS = "All songs successfully deleted from db"
 
 
 @BindingAdapter("bindList")

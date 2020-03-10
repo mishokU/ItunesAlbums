@@ -39,9 +39,9 @@ class OneAlbumViewModel(private val albumModel: AlbumModel, application: Applica
         super.onCleared()
     }
 
-    fun deleteAllSongs() {
+    fun deleteAllSongs(id : Int) {
         coroutineScope.launch {
-            repository.deleteAllSongs()
+            repository.deleteAllSongs(id)
         }
     }
 }

@@ -91,8 +91,8 @@ class OneAlbumFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.delete_all_songs -> {
-                viewModel.deleteAllSongs()
+            R.id.delete_all_current_songs -> {
+                viewModel.deleteAllSongs(albumModel.collectionId)
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -6,7 +6,7 @@
     <string name="shuffle">Shuffle</string>
     <string name="baby_pluto">Baby pluto</string>
     <string name="delete_all_albums">Delete all albums</string>
-    <string name="delete_all_songs">Delete all songs</string>
+    <string name="delete_all_songs">Delete all current songs</string>
     <string name="delete_songs_from_db">Delete songs from db</string>
     <string name="search">Search</string>
     <string name="sort">Sort alphabetically</string>

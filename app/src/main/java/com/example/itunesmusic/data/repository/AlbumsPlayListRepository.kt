@@ -61,9 +61,9 @@ class AlbumsPlayListRepository(val database : AlbumsPlayListDatabase) {
         }
     }
 
-    suspend fun deleteAllSongs() {
+    suspend fun deleteAllSongs(id : Int) {
         withContext(Dispatchers.IO){
-            database.albumPlayListDao().deleteAll()
+            database.albumPlayListDao().deleteAllSongs(id)
         }
     }
 }

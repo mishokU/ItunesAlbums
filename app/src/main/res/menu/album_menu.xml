@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/delete_all_songs"
+        android:id="@+id/delete_all_current_songs"
         android:title="@string/delete_all_songs"
         app:showAsAction="never"/>
 

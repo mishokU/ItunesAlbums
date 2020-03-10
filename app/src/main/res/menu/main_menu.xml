@@ -19,4 +19,9 @@
         android:title="@string/delete_all_albums"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/delete_all_songs"
+        android:title="@string/delete_all_songs"
+        app:showAsAction="never"/>
+
 </menu>
