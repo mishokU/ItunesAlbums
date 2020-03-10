@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#318FC3</color>
     <color name="colorTextDark">#000000</color>
-    <color name="colorBackSearchToolbar">#959292</color>
+    <color name="colorBackSearchToolbar">#BDB8B8</color>
+    <color name="colorBar">#DFDBDB</color>
 </resources>

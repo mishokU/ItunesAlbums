@@ -3,6 +3,7 @@ package com.example.itunesmusic.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import com.example.itunesmusic.R
 
 class MainActivity : AppCompatActivity() {
@@ -11,7 +12,4 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
-
-
-
 }
