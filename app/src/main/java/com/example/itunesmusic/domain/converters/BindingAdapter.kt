@@ -1,6 +1,7 @@
 package com.example.itunesmusic.domain.converters
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itunesmusic.R
 import com.example.itunesmusic.domain.models.SingleTrackModel
 import com.example.itunesmusic.ui.adapters.AlbumPlayListAdapter
-import com.example.itunesmusic.ui.adapters.AllAlbumsRecyclerViewAdapter
 import com.squareup.picasso.Picasso
 
 enum class NetworkStatus { LOADING, DONE, ERROR}
@@ -64,10 +64,22 @@ fun bindProgressBar(progressBar: ProgressBar, networkStatus: NetworkStatus?){
     }
 }
 
-fun bindEmptyList(textView: TextView, networkStatus: NetworkStatus?){
-    when(networkStatus){
-        NetworkStatus.LOADING -> textView.visibility = View.INVISIBLE
-        NetworkStatus.DONE -> textView.visibility = View.INVISIBLE
-        NetworkStatus.ERROR -> textView.visibility = View.VISIBLE
+fun bindEmptyList(toolbar: androidx.appcompat.widget.Toolbar, networkStatus: NetworkStatus?){
+    if(toolbar.id == R.id.songs_toolbar) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            when (networkStatus) {
+                NetworkStatus.LOADING -> toolbar.title = "Loading"
+                NetworkStatus.DONE -> toolbar.title = "Possible songs"
+                NetworkStatus.ERROR -> toolbar.title = "Network error"
+            }
+        }
+    } else if(toolbar.id == R.id.albums_toolbar) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            when (networkStatus) {
+                NetworkStatus.LOADING -> toolbar.title = "Loading"
+                NetworkStatus.DONE -> toolbar.title = "Albums"
+                NetworkStatus.ERROR -> toolbar.title = "Network error"
+            }
+        }
     }
 }

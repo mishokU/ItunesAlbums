@@ -127,17 +127,10 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                    <com.google.android.material.button.MaterialButton
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/songs_toolbar"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shuffle"
-                        android:layout_gravity="start"
-                        android:textAlignment="viewStart"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        app:iconSize="20dp"
-                        app:icon="@drawable/shuffle_26px"
-                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+                        android:layout_height="wrap_content"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/songs_rv"

@@ -51,13 +51,5 @@
             android:layout_gravity="center"
             android:visibility="invisible" />
 
-        <TextView
-            android:id="@+id/all_albums_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="invisible"
-            android:text="@string/empty_list"/>
-
     </FrameLayout>
 </layout>

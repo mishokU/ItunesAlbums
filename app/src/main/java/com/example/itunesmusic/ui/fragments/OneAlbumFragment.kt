@@ -38,7 +38,7 @@ class OneAlbumFragment : Fragment() {
 
         viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
             bindProgressBar(binding.albumPb, it)
-            bindEmptyList(binding.albumTv, it)
+            bindEmptyList(binding.songsToolbar, it)
         })
 
     }

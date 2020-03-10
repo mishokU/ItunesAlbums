@@ -72,7 +72,6 @@ class SearchFragment : Fragment() {
 
         viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
             bindProgressBar(binding.searchPb, it)
-            bindEmptyList(binding.searchTv, it)
         })
     }
 

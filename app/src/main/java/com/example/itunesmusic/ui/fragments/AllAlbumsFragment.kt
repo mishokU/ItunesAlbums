@@ -19,7 +19,6 @@ import com.google.android.material.snackbar.Snackbar
 
 class AllAlbumsFragment : Fragment() {
 
-
     private lateinit var binding : FragmentAllAlbumsBinding
     private lateinit var adapter : AllAlbumsRecyclerViewAdapter
 
@@ -32,7 +31,7 @@ class AllAlbumsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.allAlbumsProperty.observe(viewLifecycleOwner, Observer<List<AlbumModel>> {albums ->
-            albums?.apply {
+            albums.apply {
                 adapter.customSubmitList(albums)
             }
         })
@@ -127,7 +126,7 @@ class AllAlbumsFragment : Fragment() {
 
         viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
             bindProgressBar(binding.allAlbumsPb, it)
-            bindEmptyList(binding.allAlbumsTv, it)
+            bindEmptyList(binding.albumsToolbar, it)
         })
     }
 
