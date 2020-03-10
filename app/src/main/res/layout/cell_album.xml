@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -25,6 +25,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_height="64dp"
+                app:imageUrl="@{album.img}"
                 android:layout_centerVertical="true"
                 android:src="@drawable/album_artplay_example"/>
 
@@ -43,21 +44,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:textColor="@color/colorTextDark"
-                    android:text="Friends"/>
+                    android:text="@{album.album_name}"
+                    android:textColor="@color/colorTextDark" />
 
 
                 <TextView
                     android:id="@+id/group_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kis kis"/>
+                    android:text="@{album.group_name}"/>
 
                 <TextView
                     android:id="@+id/album_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2020"/>
+                    app:year="@{album.publish_year}"/>
 
 
             </LinearLayout>

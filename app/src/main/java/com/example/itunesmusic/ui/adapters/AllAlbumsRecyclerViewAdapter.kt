@@ -7,10 +7,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itunesmusic.databinding.CellAlbumBinding
 import com.example.itunesmusic.domain.models.AlbumModel
+import java.util.*
 
 class AllAlbumsRecyclerViewAdapter(private val onClickListener : OnAlbumClickListener) : ListAdapter<AlbumModel,
         AllAlbumsRecyclerViewAdapter.AlbumViewHolder>(DiffCallback) {
 
+    //We need this tmp list for sorting
+    private var list = currentList
+
+    fun customSubmitList(it : List<AlbumModel>){
+        list = it
+        submitList(it)
+    }
+
+    //For animation and performance
     companion object DiffCallback: DiffUtil.ItemCallback<AlbumModel>() {
         override fun areItemsTheSame(oldItem: AlbumModel, newItem: AlbumModel): Boolean {
             return oldItem === newItem
@@ -33,6 +43,12 @@ class AllAlbumsRecyclerViewAdapter(private val onClickListener : OnAlbumClickLis
         holder.bind(cityProperty)
     }
 
+    fun sortList() {
+        list.sortBy { it.album_name }
+        submitList(list)
+    }
+
+
     class AlbumViewHolder(private val binding: CellAlbumBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(album: AlbumModel?) {
             binding.album = album
@@ -40,8 +56,8 @@ class AllAlbumsRecyclerViewAdapter(private val onClickListener : OnAlbumClickLis
         }
     }
 
-    class OnAlbumClickListener(val clickListener: (cityProperty: AlbumModel?) -> Unit) {
-        fun onClick(city: AlbumModel) = clickListener(city)
+    class OnAlbumClickListener(val clickListener: (album: AlbumModel?) -> Unit) {
+        fun onClick(album: AlbumModel) = clickListener(album)
     }
 
 }

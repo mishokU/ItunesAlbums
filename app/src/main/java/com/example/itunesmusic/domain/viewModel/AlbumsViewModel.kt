@@ -22,18 +22,22 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private val database = AlbumsDatabase.getDatabase(application, coroutineScope)
+    private val database = AlbumsDatabase.getDatabase(application)
     private val repository = AlbumsRepository(database)
 
     init {
-        coroutineScope.launch {
-            repository.refreshAlbums()
-        }
+        refreshAlbums()
     }
 
-    val allAlbumsProperty = repository.albums
+    fun refreshAlbums() = coroutineScope.launch{
+        repository.refreshAlbums()
+    }
 
-    fun showFullAlbum(it: AlbumModel) {
+    //Load all albums and status from repository
+    val allAlbumsProperty = repository.albums
+    val networkStatus = repository.networkStatus
+
+    fun showFullAlbum(it: AlbumModel?) {
         _fullAlbumDescription.value = it
     }
 
@@ -41,5 +45,14 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
         _fullAlbumDescription.value = null
     }
 
+    override fun onCleared() {
+        viewModelJob.cancel()
+        super.onCleared()
+    }
 
+    fun deleteAllAlbums() {
+        coroutineScope.launch {
+            repository.deleteAllAlbums()
+        }
+    }
 }

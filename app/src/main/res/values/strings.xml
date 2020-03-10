@@ -1,11 +1,15 @@
 <resources>
-    <string name="app_name">ItunesMusic</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">iTunesMusic</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="play">Play</string>
     <string name="add">Add</string>
     <string name="shuffle">Shuffle</string>
     <string name="baby_pluto">Baby pluto</string>
-    <string name="_1">1</string>
+    <string name="delete_all_albums">Delete all albums</string>
+    <string name="delete_all_songs">Delete all songs</string>
+    <string name="delete_songs_from_db">Delete songs from db</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort alphabetically</string>
+    <string name="search_albums">Search albums</string>
+    <string name="empty_list">Empty list</string>
 </resources>

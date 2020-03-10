@@ -13,15 +13,30 @@
         <action
             android:id="@+id/action_allAlbumsFragment_to_oneAlbumFragment"
             app:destination="@id/oneAlbumFragment" />
-
-        <argument
-            android:name="album"
-            app:argType="AlbumModel"/>
+        <action
+            android:id="@+id/action_allAlbumsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/oneAlbumFragment"
         android:name="com.example.itunesmusic.ui.fragments.OneAlbumFragment"
         android:label="fragment_one_album"
-        tools:layout="@layout/fragment_one_album" />
+        tools:layout="@layout/fragment_one_album">
+
+        <argument
+            android:name="album"
+            app:argType="com.example.itunesmusic.domain.models.AlbumModel"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.itunesmusic.ui.fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_oneAlbumFragment"
+            app:destination="@id/oneAlbumFragment" />
+
+    </fragment>
 </navigation>

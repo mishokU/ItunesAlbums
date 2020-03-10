@@ -6,30 +6,35 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.itunesmusic.data.local.dao.AlbumsDao
+import com.example.itunesmusic.data.local.dao.AlbumsPlayListDao
 import com.example.itunesmusic.data.local.models.AlbumLocalModel
-import kotlinx.coroutines.*
+import com.example.itunesmusic.data.local.models.AlbumPlayListLocalModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-@Database(entities = [AlbumLocalModel::class], version = 5, exportSchema = false)
-abstract class AlbumsDatabase : RoomDatabase() {
+@Database(entities = [AlbumPlayListLocalModel::class], version = 3, exportSchema = false)
+abstract class AlbumsPlayListDatabase : RoomDatabase() {
 
-    abstract fun albumsDao(): AlbumsDao
+    abstract fun albumPlayListDao(): AlbumsPlayListDao
 
     companion object {
 
         // Singleton prevents multiple instances of database opening at the
         // same time.
         @Volatile
-        private var INSTANCE: AlbumsDatabase? = null
+        private var INSTANCE: AlbumsPlayListDatabase? = null
 
-        fun getDatabase(context: Context): AlbumsDatabase {
+        fun getDatabase(context: Context): AlbumsPlayListDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if(instance == null){
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        AlbumsDatabase::class.java,
-                        "albums_database"
+                        AlbumsPlayListDatabase::class.java,
+                        "tracks_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
