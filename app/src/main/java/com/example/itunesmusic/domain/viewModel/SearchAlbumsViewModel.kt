@@ -41,7 +41,7 @@ class SearchAlbumsViewModel(application: Application) : AndroidViewModel(applica
                     name = it,
                     entity = RequestValues.ALBUM_ENTITY,
                     media = RequestValues.MUSIC_MEDIA,
-                    attribute = RequestValues.MIX_TERM_ATTRIBUTE,
+                    attribute = RequestValues.ALBUM_TERM_ATTRIBUTE,
                     limit = MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
                 )
 
