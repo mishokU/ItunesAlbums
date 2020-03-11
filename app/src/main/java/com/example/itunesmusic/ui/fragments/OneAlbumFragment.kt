@@ -21,7 +21,6 @@ class OneAlbumFragment : Fragment() {
 
     private lateinit var binding : FragmentOneAlbumBinding
     private lateinit var albumModel: AlbumModel
-    //private lateinit var adapter : AlbumPlayListAdapter
 
     private val viewModel : OneAlbumViewModel by lazy {
 

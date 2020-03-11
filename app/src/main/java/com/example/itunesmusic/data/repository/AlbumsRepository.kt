@@ -36,7 +36,7 @@ class AlbumsRepository(
         withContext(Dispatchers.IO) {
             try {
                 val albumsDeferred = ItunesApi.retrofitService.getAlbumsAsync(
-                    name = "4",
+                    name = RequestValues.START_SEARCH,
                     entity = RequestValues.ALBUM_ENTITY,
                     media = RequestValues.MUSIC_MEDIA,
                     attribute = RequestValues.MIX_TERM_ATTRIBUTE,

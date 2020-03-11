@@ -27,10 +27,6 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     private val songsDatabase = AlbumsPlayListDatabase.getDatabase(application)
     private val repository = AlbumsRepository(database,songsDatabase)
 
-    init {
-        refreshAlbums()
-    }
-
     fun refreshAlbums() = coroutineScope.launch{
         repository.refreshAlbums()
     }

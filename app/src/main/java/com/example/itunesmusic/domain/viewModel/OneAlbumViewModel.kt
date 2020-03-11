@@ -21,9 +21,6 @@ class OneAlbumViewModel(private val albumModel: AlbumModel, application: Applica
     private val database = AlbumsPlayListDatabase.getDatabase(application)
     private val repository = AlbumsPlayListRepository(database)
 
-    init {
-        refreshSongs()
-    }
 
     //After load all play list from repository and network status
     val playList = repository.getAllSongs(albumModel.collectionId)

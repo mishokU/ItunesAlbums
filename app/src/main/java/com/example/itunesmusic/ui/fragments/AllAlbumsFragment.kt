@@ -33,6 +33,7 @@ class AllAlbumsFragment : Fragment() {
         viewModel.allAlbumsProperty.observe(viewLifecycleOwner, Observer<List<AlbumModel>> {albums ->
             albums.apply {
                 adapter.customSubmitList(albums)
+                bindProgressBar(binding.allAlbumsPb, NetworkStatus.DONE)
             }
         })
     }

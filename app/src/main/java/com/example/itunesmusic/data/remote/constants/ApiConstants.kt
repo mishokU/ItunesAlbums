@@ -21,6 +21,7 @@ object RequestKeys {
 }
 
 object RequestValues {
+    const val START_SEARCH = "a"
     const val ALBUM_ENTITY = "album"
     const val SONG_ENTITY = "song"
     const val MUSIC_MEDIA = "music"
