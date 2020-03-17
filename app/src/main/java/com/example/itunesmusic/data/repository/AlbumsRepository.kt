@@ -6,20 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.itunesmusic.data.local.converters.asLocalModel
 import com.example.itunesmusic.data.local.converters.asUIModel
-import com.example.itunesmusic.data.local.database.AlbumsDatabase
-import com.example.itunesmusic.data.local.database.AlbumsPlayListDatabase
+import com.example.itunesmusic.data.local.database.ITunesDatabase
 import com.example.itunesmusic.data.remote.api.ItunesApi
 import com.example.itunesmusic.data.remote.constants.MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
 import com.example.itunesmusic.data.remote.constants.RequestValues
 import com.example.itunesmusic.domain.converters.NetworkStatus
 import com.example.itunesmusic.domain.models.AlbumModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AlbumsRepository(
-    private val database : AlbumsDatabase,
-    private val songsDatabase: AlbumsPlayListDatabase) {
+class AlbumsRepository(private val database : ITunesDatabase) {
 
     private val _networkStatus = MutableLiveData<NetworkStatus>()
     val networkStatus : LiveData<NetworkStatus>
@@ -27,7 +23,7 @@ class AlbumsRepository(
 
     //Get albums model from db and convert it to UI model
     val albums : LiveData<List<AlbumModel>> = Transformations.map(database.albumsDao().getAlbums()) {
-        asUIModel(it)
+        it.asUIModel()
     }
 
     //Call this function from coroutine on background thread but
@@ -43,30 +39,29 @@ class AlbumsRepository(
                     limit = MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
                 )
 
-                withContext(Dispatchers.Main) {
-                    _networkStatus.value = NetworkStatus.LOADING
-                }
+                showStatus(NetworkStatus.LOADING)
 
                 val albums = albumsDeferred.await()
 
                 if(albums.results.isNotEmpty()){
-                    withContext(Dispatchers.Main) {
-                        _networkStatus.value = NetworkStatus.DONE
-                    }
-                    database.albumsDao().insertAll(asLocalModel(albums.results))
+                    showStatus(NetworkStatus.DONE)
+                    database.albumsDao().insertAll(albums.results.asLocalModel())
                 }
             } catch (e : Throwable){
-                Log.d("status", e.message!!)
-                withContext(Dispatchers.Main) {
-                    _networkStatus.value = NetworkStatus.ERROR
-                }
+                showStatus(NetworkStatus.ERROR)
             }
+        }
+    }
+
+    private suspend fun showStatus(status : NetworkStatus) {
+        withContext(Dispatchers.Main) {
+            _networkStatus.value = status
         }
     }
 
     suspend fun deleteAllSongs(){
         withContext(Dispatchers.IO){
-            songsDatabase.albumPlayListDao().deleteAll()
+            database.songsDao().deleteAll()
         }
     }
 

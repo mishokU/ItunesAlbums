@@ -8,6 +8,7 @@ import com.example.itunesmusic.data.remote.api.ItunesApi
 import com.example.itunesmusic.data.remote.constants.MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
 import com.example.itunesmusic.data.remote.constants.RequestValues
 import com.example.itunesmusic.data.remote.models.AlbumRemoteModel
+import com.example.itunesmusic.data.remote.models.FullAlbumsModel
 import com.example.itunesmusic.domain.converters.NetworkStatus
 import com.example.itunesmusic.domain.models.AlbumModel
 import kotlinx.coroutines.*
@@ -51,7 +52,8 @@ class SearchAlbumsViewModel(application: Application) : AndroidViewModel(applica
 
                 if(!albums.results.isNullOrEmpty()){
                     _networkStatus.value = NetworkStatus.DONE
-                    _searchedAlbums.value = asUIModelFromNetwork(albums.results)
+                    _searchedAlbums.value = albums.results.asUIModelFromNetwork()
+                    //_searchedAlbums.value = asUIModelFromNetwork(albums.results)
                 }
             } catch (t: Throwable) {
                 _networkStatus.value = NetworkStatus.ERROR
@@ -60,8 +62,8 @@ class SearchAlbumsViewModel(application: Application) : AndroidViewModel(applica
     }
 
     //To convert from network model to UI model
-    private fun asUIModelFromNetwork(it: List<AlbumRemoteModel>): List<AlbumModel> {
-        return it.map{
+    private fun List<AlbumRemoteModel>.asUIModelFromNetwork() : List<AlbumModel> {
+        return map{
             AlbumModel(
                 id = it.artistId,
                 img = it.artworkUrl60,

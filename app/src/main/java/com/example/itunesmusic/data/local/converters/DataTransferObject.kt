@@ -9,8 +9,8 @@ import com.example.itunesmusic.domain.models.AlbumModel
 import com.example.itunesmusic.domain.models.SingleTrackModel
 
 
-fun asUIModel(it : List<AlbumLocalModel>) : List<AlbumModel> {
-    return it.map {
+fun List<AlbumLocalModel>.asUIModel() : List<AlbumModel> {
+    return map {
         AlbumModel(
             id = it.id,
             album_name = it.album_name,
@@ -24,8 +24,8 @@ fun asUIModel(it : List<AlbumLocalModel>) : List<AlbumModel> {
     }
 }
 
-fun asLocalModel(it : List<AlbumRemoteModel>) : List<AlbumLocalModel> {
-    return it.map{
+fun List<AlbumRemoteModel>.asLocalModel() : List<AlbumLocalModel> {
+    return map{
         AlbumLocalModel(
             id = it.artistId,
             img = it.artworkUrl60,
@@ -39,8 +39,8 @@ fun asLocalModel(it : List<AlbumRemoteModel>) : List<AlbumLocalModel> {
     }
 }
 
-fun asTrackUIModel(it : List<AlbumPlayListLocalModel>) : List<SingleTrackModel> {
-    return it.map {
+fun List<AlbumPlayListLocalModel>.asTrackUIModel() : List<SingleTrackModel> {
+    return map {
         SingleTrackModel(
             id = it.id,
             title = it.title,
@@ -50,8 +50,8 @@ fun asTrackUIModel(it : List<AlbumPlayListLocalModel>) : List<SingleTrackModel> 
     }
 }
 
-fun asPlayListLocalModel(it : List<AlbumsPlayListRemoteModel>) : List<AlbumPlayListLocalModel> {
-    return it.map{
+fun List<AlbumsPlayListRemoteModel>.asPlayListLocalModel() : List<AlbumPlayListLocalModel> {
+    return map{
         AlbumPlayListLocalModel(
             id = it.trackId,
             title = it.trackName,

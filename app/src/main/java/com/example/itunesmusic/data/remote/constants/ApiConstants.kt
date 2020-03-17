@@ -3,8 +3,6 @@ package com.example.itunesmusic.data.remote.constants
 const val MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT = 25
 const val MAX_NUMBER_OF_ALBUMS_FOR_DEFAULT = 10
 
-
-
 object ApiConstants {
     const val BASE_URL = "https://itunes.apple.com"
     const val SEARCH = "/search"
@@ -21,7 +19,7 @@ object RequestKeys {
 }
 
 object RequestValues {
-    const val START_SEARCH = "a"
+    const val START_SEARCH = "4"
     const val ALBUM_ENTITY = "album"
     const val SONG_ENTITY = "song"
     const val MUSIC_MEDIA = "music"

@@ -15,11 +15,6 @@ import com.squareup.picasso.Picasso
 
 enum class NetworkStatus { LOADING, DONE, ERROR}
 
-const val DELETE_ALBUMS = "Delete all albums from db"
-const val SORT = "Albums sorted by album name"
-const val DELETE_SONGS = "All songs successfully deleted from db"
-
-
 @BindingAdapter("bindList")
 fun bindList(recyclerView: RecyclerView, data : List<SingleTrackModel>?){
     val adapter = recyclerView.adapter as AlbumPlayListAdapter
@@ -68,17 +63,17 @@ fun bindEmptyList(toolbar: androidx.appcompat.widget.Toolbar, networkStatus: Net
     if(toolbar.id == R.id.songs_toolbar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             when (networkStatus) {
-                NetworkStatus.LOADING -> toolbar.title = "Loading"
-                NetworkStatus.DONE -> toolbar.title = "Possible songs"
-                NetworkStatus.ERROR -> toolbar.title = "Network error"
+                NetworkStatus.LOADING -> toolbar.title = toolbar.resources.getString(R.string.loading)
+                NetworkStatus.DONE -> toolbar.title = toolbar.resources.getString(R.string.possible_songs)
+                NetworkStatus.ERROR -> toolbar.title = toolbar.resources.getString(R.string.network_error)
             }
         }
     } else if(toolbar.id == R.id.albums_toolbar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             when (networkStatus) {
-                NetworkStatus.LOADING -> toolbar.title = "Loading"
-                NetworkStatus.DONE -> toolbar.title = "Albums"
-                NetworkStatus.ERROR -> toolbar.title = "Network error"
+                NetworkStatus.LOADING -> toolbar.title = toolbar.resources.getString(R.string.loading)
+                NetworkStatus.DONE -> toolbar.title = toolbar.resources.getString(R.string.albums)
+                NetworkStatus.ERROR -> toolbar.title = toolbar.resources.getString(R.string.network_error)
             }
         }
     }

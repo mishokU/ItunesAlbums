@@ -1,15 +1,13 @@
 package com.example.itunesmusic.domain.work
 
 import android.content.Context
-import android.service.voice.AlwaysOnHotwordDetector
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.itunesmusic.data.local.database.AlbumsDatabase
-import com.example.itunesmusic.data.local.database.AlbumsPlayListDatabase
+import com.example.itunesmusic.data.local.database.ITunesDatabase
 import com.example.itunesmusic.data.repository.AlbumsRepository
 import retrofit2.HttpException
 
-class RefreshAlbumsWorker(context: Context, params: WorkerParameters):
+class RefreshAlbumsWorker(val context: Context, params: WorkerParameters):
     CoroutineWorker(context, params) {
 
     companion object{
@@ -17,9 +15,8 @@ class RefreshAlbumsWorker(context: Context, params: WorkerParameters):
     }
 
     override suspend fun doWork(): Result {
-        val database = AlbumsDatabase.getDatabase(applicationContext)
-        val songsDatabase = AlbumsPlayListDatabase.getDatabase(applicationContext)
-        val repository = AlbumsRepository(database, songsDatabase)
+        val database = ITunesDatabase.getDatabase(applicationContext)
+        val repository = AlbumsRepository(database)
 
         return try{
             repository.refreshAlbums()

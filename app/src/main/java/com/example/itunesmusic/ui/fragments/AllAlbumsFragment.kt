@@ -1,6 +1,7 @@
 package com.example.itunesmusic.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -30,6 +31,8 @@ class AllAlbumsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding.lifecycleOwner = viewLifecycleOwner
+
         viewModel.allAlbumsProperty.observe(viewLifecycleOwner, Observer<List<AlbumModel>> {albums ->
             albums.apply {
                 adapter.customSubmitList(albums)
@@ -80,18 +83,18 @@ class AllAlbumsFragment : Fragment() {
         return when(item.itemId){
             R.id.delete_all_albums -> {
                 viewModel.deleteAllAlbums()
-                showSnackBar(DELETE_ALBUMS)
+                showSnackBar(resources.getString(R.string.delete_all_albums_from_db))
                 true
             }
             R.id.delete_all_songs ->{
                 viewModel.deleteAllSongs()
-                showSnackBar(DELETE_SONGS)
+                showSnackBar(resources.getString(R.string.delete_all_songs_from_db))
                 true
             }
             R.id.sort_alphabetically -> {
                 adapter.sortList()
                 binding.allAlbumsRv.removeAllViews()
-                showSnackBar(SORT)
+                showSnackBar(resources.getString(R.string.sort_albums_by_name))
                 true
             }
             R.id.search_album -> {
@@ -107,8 +110,27 @@ class AllAlbumsFragment : Fragment() {
     }
 
     private fun initObservers() {
+        observeFullDescription()
+        observeAllAlbums()
+        observeNetworkStatus()
+    }
 
-        //This object is waiting for clicked album and clear value
+    private fun observeNetworkStatus() {
+        viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
+            bindProgressBar(binding.allAlbumsPb, it)
+            bindEmptyList(binding.albumsToolbar, it)
+        })
+    }
+
+    private fun observeAllAlbums() {
+        viewModel.allAlbumsProperty.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.customSubmitList(it)
+            }
+        })
+    }
+
+    private fun observeFullDescription() {
         viewModel.fullAlbumDescription.observe(viewLifecycleOwner, Observer {
             it?.let {
                 this.findNavController().navigate(
@@ -116,18 +138,6 @@ class AllAlbumsFragment : Fragment() {
                 )
                 viewModel.showFullAlbumComplete()
             }
-        })
-
-        //When view model get albums that trigger adapter to populate it
-        viewModel.allAlbumsProperty.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.customSubmitList(it)
-            }
-        })
-
-        viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
-            bindProgressBar(binding.allAlbumsPb, it)
-            bindEmptyList(binding.albumsToolbar, it)
         })
     }
 

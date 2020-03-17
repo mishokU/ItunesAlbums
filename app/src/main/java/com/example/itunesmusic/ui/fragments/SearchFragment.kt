@@ -54,24 +54,31 @@ class SearchFragment : Fragment() {
     }
 
     private fun initObservables() {
+        observeSearchedAlbums()
+        observeFullAlbumDescription()
+        observeNetworkStatus()
+    }
 
-        //Upcoming data trigger view model and we will get all possible albums
-        viewModel.searchedAlbums.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
-            }
+    private fun observeNetworkStatus() {
+        viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
+            bindProgressBar(binding.searchPb, it)
         })
+    }
 
-        //This object is waiting for clicked album and clear value
+    private fun observeFullAlbumDescription() {
         viewModel.fullAlbumDescription.observe(viewLifecycleOwner, Observer {
             it?.let {
                 this.findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToOneAlbumFragment(it))
                 viewModel.showFullAlbumComplete()
             }
         })
+    }
 
-        viewModel.networkStatus.observe(viewLifecycleOwner, Observer {
-            bindProgressBar(binding.searchPb, it)
+    private fun observeSearchedAlbums() {
+        viewModel.searchedAlbums.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
         })
     }
 
