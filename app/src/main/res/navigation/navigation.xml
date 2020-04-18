@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/allAlbumsFragment"
-        android:name="com.example.itunesmusic.ui.fragments.AllAlbumsFragment"
+        android:name="com.example.itunesmusic.ui.albums.AllAlbumsFragment"
         android:label="fragment_all_albums"
         tools:layout="@layout/fragment_all_albums" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/oneAlbumFragment"
-        android:name="com.example.itunesmusic.ui.fragments.OneAlbumFragment"
+        android:name="com.example.itunesmusic.ui.album.OneAlbumFragment"
         android:label="fragment_one_album"
         tools:layout="@layout/fragment_one_album">
 
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.itunesmusic.ui.fragments.SearchFragment"
+        android:name="com.example.itunesmusic.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action

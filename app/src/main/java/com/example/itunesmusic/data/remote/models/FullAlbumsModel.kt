@@ -1,6 +1,6 @@
 package com.example.itunesmusic.data.remote.models
 
-import androidx.lifecycle.LiveData
+import com.example.itunesmusic.data.remote.album.AlbumRemoteModel
 import com.example.itunesmusic.data.remote.constants.ItunesResponseKeys
 import com.google.gson.annotations.SerializedName
 

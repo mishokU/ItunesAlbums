@@ -1,5 +1,6 @@
 package com.example.itunesmusic.data.remote.models
 
+import com.example.itunesmusic.data.remote.albums.AlbumsPlayListRemoteModel
 import com.example.itunesmusic.data.remote.constants.ItunesResponseKeys
 import com.google.gson.annotations.SerializedName
 

@@ -4,38 +4,36 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.itunesmusic.data.local.database.ITunesDatabase
-import com.example.itunesmusic.data.repository.AlbumsRepository
+import com.example.itunesmusic.data.remote.albums.AlbumsRepository
+import com.example.itunesmusic.di.utils.CoroutineScopeIO
 import com.example.itunesmusic.domain.models.AlbumModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class AlbumsViewModel(application: Application) : AndroidViewModel(application) {
+class AlbumsViewModel @Inject constructor(
+    private val repository: AlbumsRepository,
+    @CoroutineScopeIO
+    private val coroutineScope: CoroutineScope
+    )
+    : ViewModel() {
 
     private val _fullAlbumDescription = MutableLiveData<AlbumModel>()
     val fullAlbumDescription : LiveData<AlbumModel>
         get() = _fullAlbumDescription
 
-
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val database = ITunesDatabase.getDatabase(application)
-    private val repository = AlbumsRepository(database)
-
     init {
         refreshAlbums()
-    }
-
-    fun refreshAlbums() = coroutineScope.launch{
-        repository.refreshAlbums()
     }
 
     //Load all albums and status from repository
     val allAlbumsProperty = repository.albums
     val networkStatus = repository.networkStatus
+
+    fun refreshAlbums() = coroutineScope.launch{
+        repository.refreshAlbums()
+    }
 
     fun showFullAlbum(it: AlbumModel?) {
         _fullAlbumDescription.value = it
@@ -46,7 +44,7 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     override fun onCleared() {
-        viewModelJob.cancel()
+        coroutineScope.cancel()
         super.onCleared()
     }
 

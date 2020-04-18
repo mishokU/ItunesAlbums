@@ -1,19 +1,24 @@
 package com.example.itunesmusic.domain.viewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.itunesmusic.data.remote.api.ItunesApi
+import androidx.lifecycle.ViewModel
 import com.example.itunesmusic.data.remote.constants.MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
 import com.example.itunesmusic.data.remote.constants.RequestValues
-import com.example.itunesmusic.data.remote.models.AlbumRemoteModel
-import com.example.itunesmusic.data.remote.models.FullAlbumsModel
+import com.example.itunesmusic.data.remote.album.AlbumRemoteModel
+import com.example.itunesmusic.data.remote.service.ItunesService
+import com.example.itunesmusic.di.utils.CoroutineScopeIO
+import com.example.itunesmusic.di.utils.CoroutineScopeMain
 import com.example.itunesmusic.domain.converters.NetworkStatus
 import com.example.itunesmusic.domain.models.AlbumModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class SearchAlbumsViewModel(application: Application) : AndroidViewModel(application) {
+class SearchAlbumsViewModel @Inject constructor(
+    private val itunesService: ItunesService,
+    @CoroutineScopeMain
+    private val coroutineScope: CoroutineScope
+) : ViewModel() {
 
     //Object for remember one single album
     private val _fullAlbumDescription = MutableLiveData<AlbumModel>()
@@ -29,16 +34,11 @@ class SearchAlbumsViewModel(application: Application) : AndroidViewModel(applica
     val searchedAlbums : LiveData<List<AlbumModel>>
         get() = _searchedAlbums
 
-
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-
     //Search album via retrofit iTunes api with deferred type of object
     fun searchAlbum(it: String) {
         coroutineScope.launch {
             try {
-                val albumsDeferred = ItunesApi.retrofitService.getAlbumsAsync(
+                val albumsDeferred = itunesService.getAlbumsAsync(
                     name = it,
                     entity = RequestValues.ALBUM_ENTITY,
                     media = RequestValues.MUSIC_MEDIA,
@@ -46,18 +46,24 @@ class SearchAlbumsViewModel(application: Application) : AndroidViewModel(applica
                     limit = MAX_NUMBER_OF_ALBUMS_FOR_SEARCH_RESULT
                 )
 
-                _networkStatus.value = NetworkStatus.LOADING
+                showStatus(NetworkStatus.LOADING)
 
                 val albums = albumsDeferred.await()
 
                 if(!albums.results.isNullOrEmpty()){
-                    _networkStatus.value = NetworkStatus.DONE
+                    showStatus(NetworkStatus.DONE)
                     _searchedAlbums.value = albums.results.asUIModelFromNetwork()
                     //_searchedAlbums.value = asUIModelFromNetwork(albums.results)
                 }
             } catch (t: Throwable) {
-                _networkStatus.value = NetworkStatus.ERROR
+                showStatus(NetworkStatus.ERROR)
             }
+        }
+    }
+
+    private suspend fun showStatus(status : NetworkStatus) {
+        withContext(Dispatchers.Main) {
+            _networkStatus.value = status
         }
     }
 
@@ -78,8 +84,7 @@ class SearchAlbumsViewModel(application: Application) : AndroidViewModel(applica
     }
 
     override fun onCleared() {
-        //clear all coroutines in this view model
-        viewModelJob.cancel()
+        coroutineScope.cancel()
         super.onCleared()
     }
 

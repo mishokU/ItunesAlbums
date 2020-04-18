@@ -3,11 +3,17 @@ package com.example.itunesmusic.domain.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.itunesmusic.data.local.database.ITunesDatabase
-import com.example.itunesmusic.data.repository.AlbumsRepository
+import com.example.itunesmusic.data.remote.albums.AlbumsRepository
+import com.example.itunesmusic.data.remote.service.ItunesService
+import com.example.itunesmusic.di.utils.ChildWorkerFactory
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class RefreshAlbumsWorker(val context: Context, params: WorkerParameters):
+class RefreshAlbumsWorker(
+    private val repository: AlbumsRepository,
+    private val service: ItunesService,
+    val context: Context,
+    params: WorkerParameters):
     CoroutineWorker(context, params) {
 
     companion object{
@@ -15,16 +21,21 @@ class RefreshAlbumsWorker(val context: Context, params: WorkerParameters):
     }
 
     override suspend fun doWork(): Result {
-        val database = ITunesDatabase.getDatabase(applicationContext)
-        val repository = AlbumsRepository(database)
-
         return try{
             repository.refreshAlbums()
             Result.success()
         } catch (exception : HttpException){
             return Result.failure()
         }
+    }
 
+    class Factory @Inject constructor(
+        private val repository: AlbumsRepository,
+        private val service: ItunesService
+    ): ChildWorkerFactory {
 
+        override fun create(context: Context, params: WorkerParameters): CoroutineWorker {
+            return RefreshAlbumsWorker(repository, service, context, params)
+        }
     }
 }

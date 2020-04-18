@@ -10,7 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itunesmusic.R
 import com.example.itunesmusic.domain.models.SingleTrackModel
-import com.example.itunesmusic.ui.adapters.AlbumPlayListAdapter
+import com.example.itunesmusic.ui.album.AlbumPlayListAdapter
 import com.squareup.picasso.Picasso
 
 enum class NetworkStatus { LOADING, DONE, ERROR}

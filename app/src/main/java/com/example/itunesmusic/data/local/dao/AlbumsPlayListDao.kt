@@ -14,12 +14,12 @@ interface AlbumsPlayListDao  {
     fun insertAll(it : List<AlbumPlayListLocalModel>)
 
     @Query("Select * from tracks_table where collectionId = :collection_id and time != 0")
-    fun getAllSongs(collection_id : Int) : LiveData<List<AlbumPlayListLocalModel>>
+    fun getAllSongs(collection_id : Int?) : LiveData<List<AlbumPlayListLocalModel>>
 
     @Query("Delete from tracks_table")
     fun deleteAll()
 
     @Query("Delete from tracks_table where collectionId = :collection_id")
-    fun deleteAllSongs(collection_id : Int)
+    fun deleteAllSongs(collection_id : Int?)
 
 }

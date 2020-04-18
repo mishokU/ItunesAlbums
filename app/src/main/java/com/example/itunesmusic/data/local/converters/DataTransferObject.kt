@@ -1,10 +1,9 @@
 package com.example.itunesmusic.data.local.converters
 
-import android.provider.MediaStore
 import com.example.itunesmusic.data.local.models.AlbumLocalModel
 import com.example.itunesmusic.data.local.models.AlbumPlayListLocalModel
-import com.example.itunesmusic.data.remote.models.AlbumRemoteModel
-import com.example.itunesmusic.data.remote.models.AlbumsPlayListRemoteModel
+import com.example.itunesmusic.data.remote.album.AlbumRemoteModel
+import com.example.itunesmusic.data.remote.albums.AlbumsPlayListRemoteModel
 import com.example.itunesmusic.domain.models.AlbumModel
 import com.example.itunesmusic.domain.models.SingleTrackModel
 
